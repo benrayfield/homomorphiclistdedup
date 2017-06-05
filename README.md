@@ -11,7 +11,7 @@ hash(listX) = pair(mySum(listX)%globalModulus,myMult(listX)%globalModulus)
 
 mySum(listX) = isSparseRange(y) ? 0 : sum_y in listX_(mySum(y)*globalLeafMult^index(y,x))
 
-myMult(listX) = isLeaf(listX) ? 1 : multiply_y in listX_(myMult(y))
+myMult(listX) = isLeaf(listX) ? globalLeafMult : multiply_y in listX_(myMult(y))
 
 TODO verify this math matches the code (which passes testcases).
 
