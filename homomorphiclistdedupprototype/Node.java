@@ -74,8 +74,13 @@ public class Node{
 		return "(uflist "+primeWrappedSum+" "+primeWrappedExponential+")";
 	}
 	
-	static BigInteger randPrime(int bits){
+	public static BigInteger randPositivePrime(int bits){
 		return new BigInteger(bits, 500, strongRand);
+	}
+	
+	public static BigInteger randPrimePosOrNeg(int bits){
+		BigInteger b = randPositivePrime(bits-1);
+		return strongRand.nextBoolean() ? b : b.negate();
 	}
 	
 	public boolean equals(Object o){
@@ -91,13 +96,13 @@ public class Node{
 	}
 	
 	public static void main(String[] args){
-		BigInteger mod = randPrime(256);
-		BigInteger leafMult = randPrime(200); //BigInteger.valueOf(2); //must be less than mod
+		BigInteger mod = randPrimePosOrNeg(256);
+		BigInteger leafMult = randPrimePosOrNeg(200); //BigInteger.valueOf(2); //must be less than mod
 		HashType h = new HashType(leafMult, mod);
-		Node x = new Node(randPrime(256), leafMult, h);
-		Node y = new Node(randPrime(256), leafMult, h);
-		Node m = new Node(randPrime(256), leafMult, h);
-		Node n = new Node(randPrime(256), leafMult, h);
+		Node x = new Node(randPrimePosOrNeg(256), leafMult, h);
+		Node y = new Node(randPrimePosOrNeg(256), leafMult, h);
+		Node m = new Node(randPrimePosOrNeg(256), leafMult, h);
+		Node n = new Node(randPrimePosOrNeg(256), leafMult, h);
 		for(int i=0; i<20; i++){
 			System.out.println("x="+x);
 			System.out.println("y="+y);
@@ -119,7 +124,6 @@ public class Node{
 			System.out.println("axayxbb="+axayxbb);
 			Node xyxyxyx1 = x.concat(y).concat(x).concat(y).concat(x).concatEmptyIndexs(5000).concat(x).concat(y);
 			Node xyxyxyx2 = x.concat(y).concat(x).concat(y.concat(x).concatEmptyIndexs(2000).concatEmptyIndexs(3000).concat(x).concat(y));
-			//Node xyxyxyx2 = x.concat(y).concat(x).concat(y.concat(x).concatEmptyIndexs(2000).concatEmptyIndexs(3000).concat(x).concat(y));
 			System.out.println("xyxyxyx1=?xyxyxyx2 "+xyxyxyx1.equals(xyxyxyx2)+" (should be true)");
 			System.out.println("xyxyxyx1=?x "+xyxyxyx1.equals(x)+" (should be false)");
 			System.out.println("-------"+i+"---------");
