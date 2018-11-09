@@ -1,5 +1,5 @@
 # homomorphiclistdedup
-Same secureHash by list content regardless of order of tree rotations and internal structure
+Same hash by list content regardless of order of tree rotations and internal structure (UPDATE there is a way to create collisions but it doesnt happen by accident)
 
 Collision resistance is backed by subsetSum (which is npcomplete) wrapped around a prime,
 or the secureHash used to generate arbitrary mySum of leafs (recommend SHA256),
